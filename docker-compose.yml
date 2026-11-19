@@ -1,0 +1,16 @@
+services:
+  cbuild:
+    build: .
+    image: cbuild-service:latest
+    ports:
+      - "8000:8000"
+    environment:
+      CACHE_DIR: /cache/objects
+      WORK_DIR: /tmp/cbuild-work
+    volumes:
+      # Object cache survives container restarts.
+      - cbuild-cache:/cache
+    restart: unless-stopped
+
+volumes:
+  cbuild-cache:
